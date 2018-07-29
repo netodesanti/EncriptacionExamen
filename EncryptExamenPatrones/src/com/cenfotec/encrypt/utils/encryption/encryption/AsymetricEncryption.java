@@ -2,9 +2,7 @@ package com.cenfotec.encrypt.utils.encryption.encryption;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +22,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
-import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
 
 import javax.crypto.BadPaddingException;
@@ -39,7 +36,8 @@ public class AsymetricEncryption implements Encryption {
 	private final String KEY_EXTENSION = ".key";
 	private final String MESSAGE_ENCRYPT_EXTENSION = ".encript";
 	private final String PATH = "/Users/netodesanti/Documents/encrypt/asymetric/";
-
+	private final MethodsHelper helper = new MethodsHelper();
+	
 	@Override
 	public void createKey(String name) {
 		KeyPairGenerator kpg;
@@ -73,7 +71,7 @@ public class AsymetricEncryption implements Encryption {
 			byte[] encryptedData = cipher.doFinal(pMessage.getBytes(StandardCharsets.UTF_8));
 			Encoder oneEncoder = Base64.getEncoder();
 			encryptedData = oneEncoder.encode(encryptedData);
-			writeBytesFile(pName, encryptedData, MESSAGE_ENCRYPT_EXTENSION);
+			helper.writeBytesFile(pName, encryptedData, MESSAGE_ENCRYPT_EXTENSION, PATH);
 		} catch (IOException | NoSuchAlgorithmException | NoSuchPaddingException e) {
 			e.printStackTrace();
 		} catch (InvalidKeyException e) {
@@ -92,7 +90,7 @@ public class AsymetricEncryption implements Encryption {
 			privKey = (PrivateKey)readKeyFromFile(pKey, PRIVATE);
 			Cipher cipher = Cipher.getInstance("RSA");
 			cipher.init(Cipher.DECRYPT_MODE, privKey);
-			byte[] encryptedMessage = readMessageFile(pName);
+			byte[] encryptedMessage = helper.readMessageFile(pName, PATH);
 			byte[] decryptedData = cipher.doFinal(encryptedMessage);
 		    String message = new String(decryptedData,StandardCharsets.UTF_8);
 		    System.out.println("El mensaje era: ");
@@ -138,23 +136,5 @@ public class AsymetricEncryption implements Encryption {
 			oin.close();
 		}
 	}
-	
-	private void writeBytesFile(String name, byte[] content, String type) throws FileNotFoundException, IOException {
-		FileOutputStream fos = new FileOutputStream(PATH + name + type);
-		fos.write(content);
-		fos.close();
-	}
-	
-	private byte[] readMessageFile(String messageName) throws Exception{
-		File file = new File(PATH + messageName + MESSAGE_ENCRYPT_EXTENSION);
-        int length = (int) file.length();
-        BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file));
-        byte[] bytes = new byte[length];
-        reader.read(bytes, 0, length);
-        reader.close();
-        Decoder oneDecoder = Base64.getDecoder();
-		return oneDecoder.decode(bytes);
 		
-	}
-
 }
