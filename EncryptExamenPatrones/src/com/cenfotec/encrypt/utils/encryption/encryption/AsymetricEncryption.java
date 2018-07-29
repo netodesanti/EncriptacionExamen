@@ -84,21 +84,21 @@ public class AsymetricEncryption implements Encryption {
 	}
 	
 	@Override
-	public void decryptMessage(String pKey, String pName) {
+	public String decryptMessage(String pKey, String pName) {
 		PrivateKey privKey;
+		String message = null;
 		try {
 			privKey = (PrivateKey)readKeyFromFile(pKey, PRIVATE);
 			Cipher cipher = Cipher.getInstance("RSA");
 			cipher.init(Cipher.DECRYPT_MODE, privKey);
 			byte[] encryptedMessage = helper.readMessageFile(pName, PATH);
 			byte[] decryptedData = cipher.doFinal(encryptedMessage);
-		    String message = new String(decryptedData,StandardCharsets.UTF_8);
-		    System.out.println("El mensaje era: ");
-			System.out.println(message);
+		    message = new String(decryptedData,StandardCharsets.UTF_8);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
+		return message;
 	}
 
 	private void saveToFile(String fileName, BigInteger mod, BigInteger exp) throws IOException {

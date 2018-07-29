@@ -44,8 +44,9 @@ public class DESEncryption implements Encryption {
 	}
 
 	@Override
-	public void decryptMessage(String pKey, String pName) {
+	public String decryptMessage(String pKey, String pName) {
 		byte[] key;
+		String message = null;
 		try {
 			key = helper.readKeyFile(pKey, PATH, KEY_EXTENSION);
 			Cipher cipher = Cipher.getInstance("DES");
@@ -55,13 +56,12 @@ public class DESEncryption implements Encryption {
 			cipher.init(Cipher.DECRYPT_MODE, myKey);
 			byte[] decryptedData = cipher.doFinal(mensajeEncriptado);
 			
-			String message = new String(decryptedData, StandardCharsets.UTF_8);
-			System.out.println("El mensaje era: ");
-			System.out.println(message);
+			message = new String(decryptedData, StandardCharsets.UTF_8);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
+		return message;
 	}
 		
 }

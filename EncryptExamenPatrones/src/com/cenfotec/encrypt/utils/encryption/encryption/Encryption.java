@@ -4,5 +4,5 @@ public interface Encryption {
 
 	public void createKey(String pKeyName);
 	public void encryptMessage(String pKey, String pName, String pMessage); 
-	public void decryptMessage(String pKey, String pName);
+	public String decryptMessage(String pKey, String pName);
 }

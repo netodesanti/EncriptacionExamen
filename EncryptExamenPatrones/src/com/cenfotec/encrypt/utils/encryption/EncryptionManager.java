@@ -18,8 +18,8 @@ public class EncryptionManager {
 		encryption.encryptMessage(pKeyName, pMessageName, pMessage);
 	}
 	
-	public void decryptMessage(String pKeyName, String pMessageName, EncryptionType pType) {
+	public String decryptMessage(String pKeyName, String pMessageName, EncryptionType pType) {
 		encryption = EncryptionFactory.create(pType);
-		encryption.decryptMessage(pKeyName, pMessageName);
+		return encryption.decryptMessage(pKeyName, pMessageName);
 	}
 }

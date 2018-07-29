@@ -44,8 +44,9 @@ public class SymetricEncryption implements Encryption {
 	}
 
 	@Override
-	public void decryptMessage(String pKey, String pName) {
+	public String decryptMessage(String pKey, String pName) {
 		byte[] key;
+		String message = null;
 		try {
 			key = helper.readKeyFile(pKey, PATH, KEY_EXTENSION);
 			byte[] encryptedMessage = helper.readMessageFile(pName, PATH);
@@ -53,12 +54,12 @@ public class SymetricEncryption implements Encryption {
 			SecretKeySpec k = new SecretKeySpec(key,"AES");
 			cipher.init(Cipher.DECRYPT_MODE, k);
 			byte[] DecryptedData = cipher.doFinal(encryptedMessage);
-			String message = new String(DecryptedData, StandardCharsets.UTF_8);
-			System.out.println("El mensaje era: ");
-			System.out.println(message);
+			message = new String(DecryptedData, StandardCharsets.UTF_8);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		return message;
 	}
 
 }

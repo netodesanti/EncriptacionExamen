@@ -57,7 +57,8 @@ public class EncryptApplication {
 			String keyName = br.readLine();
 			System.out.println("Symetric message name: ");
 			String messageName = br.readLine();
-			mainController.decryptMessage(messageName, keyName, EncryptionType.SYMETRIC);
+			System.out.println("El mensaje era: ");
+			System.out.println(mainController.decryptMessage(messageName, keyName, EncryptionType.SYMETRIC));
 		}
 
 		// Asymetric encryption
@@ -80,7 +81,8 @@ public class EncryptApplication {
 			String keyName = br.readLine();
 			System.out.println("Asymetric message name: ");
 			String messageName = br.readLine();
-			mainController.decryptMessage(messageName, keyName, EncryptionType.ASYMETRIC);
+			System.out.println("El mensaje era: ");
+			System.out.println(mainController.decryptMessage(messageName, keyName, EncryptionType.ASYMETRIC));
 		}
 
 		// DES Symetric encryption
@@ -103,7 +105,8 @@ public class EncryptApplication {
 			String keyName = br.readLine();
 			System.out.println("DES message name: ");
 			String messageName = br.readLine();
-			mainController.decryptMessage(messageName, keyName, EncryptionType.DES);
+			System.out.println("El mensaje era: ");
+			System.out.println(mainController.decryptMessage(messageName, keyName, EncryptionType.DES));
 		}
 
 	}

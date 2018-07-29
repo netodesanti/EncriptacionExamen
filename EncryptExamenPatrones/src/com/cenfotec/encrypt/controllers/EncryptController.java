@@ -15,8 +15,8 @@ public class EncryptController {
 		encryptManager.encryptMessage(messageName, message, name, pType);
 	}
 
-	public void decryptMessage(String messageName, String keyName, EncryptionType pType) {
-		encryptManager.decryptMessage(keyName, messageName, pType);
+	public String decryptMessage(String messageName, String keyName, EncryptionType pType) {
+		return encryptManager.decryptMessage(keyName, messageName, pType);
 	}
 
 }
