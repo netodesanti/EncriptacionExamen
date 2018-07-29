@@ -9,6 +9,8 @@ public class EncryptionFactory {
 			return new SymetricEncryption();
 		case ASYMETRIC:
 			return new AsymetricEncryption();
+		case DES:
+			return new DESEncryption();
 		default:
 			return null;
 		}
